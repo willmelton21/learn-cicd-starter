@@ -7,7 +7,7 @@ import (
 )
 
 
-func testAPIKey (t *testing.T) {
+func TestAPIKey (t *testing.T) {
 	
 	tests := []struct {
 		name string
