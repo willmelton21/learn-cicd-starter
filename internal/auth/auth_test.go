@@ -1,43 +1,62 @@
 package auth
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 	"testing"
-	"reflect"
 )
 
-
-func TestAPIKey (t *testing.T) {
-	
+func TestGetAPIKey(t *testing.T) {
 	tests := []struct {
-		name string
-		headers http.Header
-		expectedKey string
-		expectedError bool
+		key       string
+		value     string
+		expect    string
+		expectErr string
 	}{
 		{
-		name: "valid API Key",
-		headers: http.Header{"Authorization": []string{"Bearer valid-api-key"}},
-		expectedKey: "valid-api-key",
-		expectedError: false,
-	},
-	{	name: "missing API key",
-		headers: http.Header{},
-		expectedKey: "",
-		expectedError: true,
+			expectErr: "no authorization header",
 		},
-	{	name: "malformed API Key",
-		headers: http.Header{"Authorization": []string{"malformed-key-format"}},
-		expectedKey: "",
-		expectedError: true,
+		{
+			key:       "Authorization",
+			expectErr: "no authorization header",
+		},
+		{
+			key:       "Authorization",
+			value:     "-",
+			expectErr: "malformed authorization header",
+		},
+		{
+			key:       "Authorization",
+			value:     "Bearer xxxxxx",
+			expectErr: "malformed authorization header",
+		},
+		{
+			key:       "Authorization",
+			value:     "ApiKey xxxxxx",
+			expect:    "xxxxxx",
+			expectErr: "not expecting an error",
 		},
 	}
 
-	for _, tc := range tests {
-		got,err := GetAPIKey(tc.headers)
-		if !reflect.DeepEqual(tc.expectedKey,got) || (tc.expectedError == true && err != nil) {
-			t.Fatalf("test %s: expected: %v, got: %v, expected error: %v, got error: %v",tc.name,tc.expectedKey,got,tc.expectedError,err)	
-		}
-	}
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("TestGetAPIKey Case #%v:", i), func(t *testing.T) {
+			header := http.Header{}
+			header.Add(test.key, test.value)
 
+			output, err := GetAPIKey(header)
+			if err != nil {
+				if strings.Contains(err.Error(), test.expectErr) {
+					return
+				}
+				t.Errorf("Unexpected: TestGetAPIKey:%v\n", err)
+				return
+			}
+
+			if output != test.expect {
+				t.Errorf("Unexpected: TestGetAPIKey:%s", output)
+				return
+			}
+		})
+	}
 }
