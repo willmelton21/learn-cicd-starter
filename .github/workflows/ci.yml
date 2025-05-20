@@ -36,9 +36,14 @@ jobs:
 
        - name: test formatting 
          run: test -z $(go fmt ./...)
+         shell: bash 
 
 
        - name: check for failures
          run: echo $?        
+         shell: bash 
+
+
+
 
 
