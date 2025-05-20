@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-
 	"github.com/bootdotdev/learn-cicd-starter/internal/auth"
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 )
