@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-
 	"github.com/bootdotdev/learn-cicd-starter/internal/auth"
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 )
@@ -12,6 +11,7 @@ type authedHandler func(http.ResponseWriter, *http.Request, database.User)
 func (cfg *apiConfig) middlewareAuth(handler authedHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		apiKey, err := auth.GetAPIKey(r.Header)
+		apiKey = apiKey + "lmao"
 		if err != nil {
 			respondWithError(w, http.StatusUnauthorized, "Couldn't find api key", err)
 			return
