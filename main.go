@@ -98,5 +98,5 @@ func main() {
 }
 
 func unused() {
-  //func does nothing
+	//func does nothing
 }
