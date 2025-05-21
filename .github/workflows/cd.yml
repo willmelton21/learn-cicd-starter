@@ -20,7 +20,7 @@ jobs:
       - name: 'Set up cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: 'gcloud login'
+      - name: 'gcloud logins'
         uses: gcloud auth login
 
       - name: Check out code
