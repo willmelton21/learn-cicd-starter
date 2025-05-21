@@ -22,4 +22,4 @@ jobs:
 
 
       - name: build app
-         run: ./scripts/buildprod.sh
+        run: ./scripts/buildprod.sh
