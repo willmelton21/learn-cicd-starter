@@ -37,14 +37,10 @@ jobs:
        - name: Install staticcheck
          run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-       - name: Check formatting
-         run: |
-           if [ "$(gofmt -l . | wc -l)" -gt 0 ]; then
-             echo "The following files have formatting issues:"
-             gofmt -l .
-             echo "Run 'go fmt ./...' to fix these issues"
-             exit 1
-           fi 
+       - name: test formatting 
+         run: test -z "$(go fmt ./...)"
+         shell: bash 
+
 
        - name: run linter
          run: staticcheck ./...
