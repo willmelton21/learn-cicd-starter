@@ -31,5 +31,8 @@ jobs:
       - name: build app
         run: ./scripts/buildprod.sh
 
+      - name: config Docker
+        run: gcloud auth configure-docker
+
       - name: build Docker
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-460521/notely-ar-repo/notely:latest .
