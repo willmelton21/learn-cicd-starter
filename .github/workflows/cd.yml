@@ -20,9 +20,6 @@ jobs:
       - name: 'Set up cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: 'gcloud logins'
-        uses: gcloud auth login
-
       - name: Check out code
         uses: actions/checkout@v4
 
@@ -33,6 +30,9 @@ jobs:
 
       - name: build app
         run: ./scripts/buildprod.sh
+
+      - name: Use gcloud CLI
+        run: gcloud info
 
       - name: config Docker
         run: gcloud auth configure-docker
