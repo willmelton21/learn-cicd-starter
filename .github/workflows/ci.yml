@@ -40,11 +40,11 @@ jobs:
        - name: Check formatting
          run: |
            if [ "$(gofmt -l . | wc -l)" -gt 0 ]; then
-           echo "The following files have formatting issues:"
-           gofmt -l .
-           echo "Run 'go fmt ./...' to fix these issues"
-           exit 1
-         fi 
+             echo "The following files have formatting issues:"
+             gofmt -l .
+             echo "Run 'go fmt ./...' to fix these issues"
+             exit 1
+           fi 
 
        - name: run linter
          run: staticcheck ./...
