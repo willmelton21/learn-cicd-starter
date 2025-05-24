@@ -41,7 +41,7 @@ jobs:
       - name: build Docker
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-460521/notely-ar-repo/notely:latest .
 
-      - name: update Database
+      - name: update Database with script
         run: ./scripts/migrateup.sh
 
       - name: Deploy to Cloud Run
